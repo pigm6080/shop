@@ -1,0 +1,41 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: shop
+
+  devtools:
+    restart:
+      enabled: true
+
+  livereload:
+    enabled: true
+
+  thymeleaf:
+    cache: false
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/webdb
+    username: root
+    password: 1234
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: create #none
+    database-platform: org.hibernate.dialect.MySQL8Dialect #???, mysql ?? ??? ???????.
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+# ?? ?? > ?? > ??
+#DEBUG > INFO > Warinning
