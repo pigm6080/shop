@@ -9,4 +9,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByItemNm(String itemNm); //쿼리 메소드
 
+    List<Item> findByItemNmOrItemDetail(String itemNm,String itemDetail);
+
 }

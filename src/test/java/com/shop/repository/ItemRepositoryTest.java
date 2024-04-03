@@ -33,6 +33,19 @@ public class ItemRepositoryTest {
     }
 
     @Test
+    @DisplayName("상품명, 상품 상세 설명 or 테스트")
+    public void findByItemNmOrItemDetailTest() {
+        this.createItemList(); //데이터 10개 저장
+        List<Item> itemList = itemRepository.findByItemNmOrItemDetail("테스트 상품1","테스트 상품 상세 설명5");
+    /*
+        for (Item item : itemList){
+            System.out.println(item.toString());
+        }
+    */
+        itemList.forEach(item -> System.out.println(item));
+    }
+
+    @Test
     @DisplayName("상품 조회 테스트")
     public void findByItemTest() {
         this.createItemList(); //데이터 10개 저장
@@ -43,8 +56,6 @@ public class ItemRepositoryTest {
         }
     */
         itemList.forEach(item -> System.out.println(item));
-
-
     }
 
 
