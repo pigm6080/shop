@@ -31,6 +31,18 @@ public class ItemRepositoryTest {
             Item saveItem = itemRepository.save(item);
         }
     }
+    @Test
+    @DisplayName("@Query를 이용한 상품 조회 테스트")
+    public void findByItemDetailTest() {
+        this.createItemList(); //데이터 10개 저장
+        List<Item> itemList = itemRepository.findByItemDetail("테스트 상품 상세 설명");
+    /*
+        for (Item item : itemList){
+            System.out.println(item.toString());
+        }ㄴ
+    */
+        itemList.forEach(item -> System.out.println(item));
+    }
 
     @Test
     @DisplayName("가격 내림차순 조회 테스트")
