@@ -20,8 +20,8 @@
         </thead>
 
         <tbody>
-            <tr th:each="itemDto, k: ${itemDtoList}">
-                <td th:text="${k.index}"></td>
+            <tr th:each="itemDto, status: ${itemDtoList}">
+                <td th:text="${status.index}"></td>
                 <td th:text="${itemDto.itemNm}"></td>
                 <td th:text="${itemDto.itemDetail}"></td>
                 <td th:text="${itemDto.price}"></td>
