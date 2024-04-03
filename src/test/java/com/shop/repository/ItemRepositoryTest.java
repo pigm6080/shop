@@ -33,6 +33,19 @@ public class ItemRepositoryTest {
     }
 
     @Test
+    @DisplayName("가격 내림차순 조회 테스트")
+    public void findByPriceLessThanOrderByPriceDescTest() {
+        this.createItemList(); //데이터 10개 저장
+        List<Item> itemList = itemRepository.findByPriceLessThanOrderByPriceDesc(10005);
+    /*
+        for (Item item : itemList){
+            System.out.println(item.toString());
+        }ㄴ
+    */
+        itemList.forEach(item -> System.out.println(item));
+    }
+
+    @Test
     @DisplayName("가격 LessThan 테스트")
     public void findByPriceLessThanTest() {
         this.createItemList(); //데이터 10개 저장
@@ -40,7 +53,7 @@ public class ItemRepositoryTest {
     /*
         for (Item item : itemList){
             System.out.println(item.toString());
-        }
+        }ㄴ
     */
         itemList.forEach(item -> System.out.println(item));
     }
