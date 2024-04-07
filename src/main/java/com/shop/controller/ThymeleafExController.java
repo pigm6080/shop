@@ -92,4 +92,9 @@ public class ThymeleafExController {
         return "thymeleafEx/thymeleafEx06";
     }
 
+    @GetMapping("/ex07")
+    public String thymeleafExample07(){
+        System.out.println("씨발");
+        return "thymeleafEx/thymeleafEx07";
+    }
 }
