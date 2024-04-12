@@ -1,13 +1,12 @@
 package com.shop.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class MemberFormDto { //가입화면으로 부터 넘어오는 값을 감을 dto생성.
 
