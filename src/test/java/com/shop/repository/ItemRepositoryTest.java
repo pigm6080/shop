@@ -65,14 +65,14 @@ public class ItemRepositoryTest {
     @DisplayName("Querydsl 조회 테스트1")
     public void queryDslTest(){
         this.createItemList();
-        JPAQueryFactory query = new JPAQueryFactory(em);
-        QItem qItem = QItem.item;
+        JPAQueryFactory query = new JPAQueryFactory(em); // 쿼리 동적 생성한다. 생성자 파라미터로 엔티티 매니저 주입해야한다.
+        QItem qItem = QItem.item; //querydsl을 통해 쿼리를 생성하기 위해 자동으로 생성된 qitem 객체를 이용한다.
 
-        List<Item> itemList = query.selectFrom(QItem.item)
+        List<Item> itemList = query.selectFrom(QItem.item) //자바 코드이지만 sql문과 비슷하게 소스를 작성할수있다.
                 .where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
                 .where(qItem.itemDetail.like("%" + "테스트 상품 상세 설명" + "%"))
                 .orderBy(qItem.price.desc())
-                .fetch();
+                .fetch(); // 쿼라결과를 리스트로 반환해주는 메소드이다.
 /*
 		for(Item item : itemList){
 			System.out.println(item.toString());
@@ -207,7 +207,8 @@ public class ItemRepositoryTest {
 
         this.createItemList2();
 
-        BooleanBuilder builder = new BooleanBuilder();
+        BooleanBuilder builder = new BooleanBuilder(); //쿼리에 들어갈 조건을 만들어 주는 빌더라고 생각하면된다.
+
         String itemDetail = "테스트";
         int price = 10003;
         String itemSellStatus = "SELL";
@@ -215,7 +216,7 @@ public class ItemRepositoryTest {
         QItem item = QItem.item;
 
         builder.and(item.itemDetail.like("%" + itemDetail + "%"));
-        builder.and(item.price.gt(price));
+        builder.and(item.price.gt(price)); //granthen 이다.
 
         if(StringUtils.equals(itemSellStatus, ItemSellStatus.SELL)){
             builder.and(item.itemSellStatus.eq(ItemSellStatus.SELL));
