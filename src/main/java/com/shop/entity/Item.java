@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Table(name = "item")
-public class Item {
+public class Item extends BaseEntity{
 
     @Id //테이블의 기본키에 사용할 속성을 정함. entity클래스는 반드시 기본키를 가져야한다.
     @Column(name="item_id") //필드와 컬럼 매핑
@@ -35,8 +35,5 @@ public class Item {
     @Enumerated(EnumType.STRING) //enum 타입을 매핑한다.
     private ItemSellStatus itemSellStatus; // 상품 판매 상태
 
-    private LocalDateTime regTime; // 등록 시간
-
-    private LocalDateTime updateTime; // 수정 시간
 
 }

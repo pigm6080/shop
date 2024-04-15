@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 @Entity
 @Getter@Setter@ToString
 @Table(name = "cart")
-public class Cart {
+public class Cart extends BaseEntity{
 
     @Id
     @Column(name = "cart_id")

@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @NoArgsConstructor //기본생성자 생성
 @AllArgsConstructor //모든 필드 포한하는 생성자 생선
 @Builder
-public class Member {
+public class Member extends BaseEntity{
 
     @Id //기본키
     @Column(name = "member_id") //컬럼 이름
