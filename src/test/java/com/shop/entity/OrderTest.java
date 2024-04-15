@@ -2,6 +2,7 @@ package com.shop.entity;
 
 import com.shop.constant.ItemSellStatus;
 import com.shop.repository.ItemRepository;
+import com.shop.repository.MemberRepository;
 import com.shop.repository.OrderRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.parser.Entity;
@@ -25,6 +27,9 @@ class OrderTest {
 
     @Autowired
     ItemRepository itemRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Autowired
     EntityManager em;
@@ -69,5 +74,37 @@ class OrderTest {
                 .orElseThrow(EntityNotFoundException::new);
         assertEquals(3, saveOrder.getOrderItems().size());
     }
+
+    public Order createOrder() {
+        Order order = new Order();
+
+        for (int i = 0; i < 3; i++) {
+            Item item = this.createItem();
+            itemRepository.save(item);
+            OrderItem orderItem = OrderItem.builder()
+                    .item(item)
+                    .count(10)
+                    .orderPrice(1000)
+                    .order(order)
+                    .build();
+            order.getOrderItems().add(orderItem);
+        }
+        Member member = new Member();
+        memberRepository.save(member);
+
+        order.setMember(member);
+        orderRepository.save(order);
+        return order;
+    }
+    @Test
+   // @Commit
+    @DisplayName("고아객체 제거 테스트")
+    public void orphanRemovalTest(){
+        Order order = this.createOrder();
+        order.getOrderItems().remove(0);
+        em.flush();
+    }
+
+
 
 }

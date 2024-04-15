@@ -27,7 +27,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus; //주문상태
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL) //양방향 매핑에 사용된다.
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,
+        orphanRemoval = true) //양방향 매핑에 사용된다.
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private LocalDateTime regTime;
