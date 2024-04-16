@@ -6,6 +6,7 @@ import com.shop.entity.Item;
 import com.shop.entity.ItemImg;
 import com.shop.repository.ItemImgRepository;
 import com.shop.repository.ItemRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +21,7 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-
     private final ItemImgService itemImgService;
-
     private final ItemImgRepository itemImgRepository;
 
     public Long saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception{
@@ -47,7 +46,8 @@ public class ItemService {
         return item.getId();
     }
 
-    @Transactional(readOnly = true)
+
+    @Transactional(readOnly = true) //읽기 전용 트랜잭션을 사용한다는 얘기. 이를 통해 성능 최적화 가능
     public ItemFormDto getItemDtl(Long itemId){
 
         List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
@@ -56,10 +56,30 @@ public class ItemService {
 
         for(ItemImg itemImg : itemImgList){
             ItemImgDto itemImgDto = ItemImgDto.of(itemImg);
-            itemImgList.add(itemImgDto);
+            itemImgDtoList.add(itemImgDto);
         }
+        Item item = itemRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
+        ItemFormDto itemFormDto = ItemFormDto.of(item);
+        itemFormDto.setItemImgDtoList(itemImgDtoList);
+        return itemFormDto;
 
-        
+    }
+
+    public Long updateItem(ItemFormDto itemFormDto , List<MultipartFile> itemImgFileList) throws Exception{
+
+        //상품 수정
+        Item item = itemRepository.findById(itemFormDto.getId()).orElseThrow(EntityNotFoundException::new);
+        item.updateItem(itemFormDto);
+
+        List<Long> itemImgIds = itemFormDto.getItemImgIds();
+
+        //이미지 등록
+
+        for(int i= 0; i<itemImgFileList.size(); i++){
+            itemImgService.updateItemImg(itemImgIds.get(i), itemImgFileList.get(i));
+        }
+        return item.getId();
+
     }
 
 }
