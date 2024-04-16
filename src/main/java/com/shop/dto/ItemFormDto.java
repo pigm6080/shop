@@ -4,15 +4,15 @@ import com.shop.constant.ItemSellStatus;
 import com.shop.entity.Item;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.ui.ModelMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Builder
 public class ItemFormDto {
 
     private Long id;
@@ -40,7 +40,7 @@ public class ItemFormDto {
     public Item createItem(){
         return modelMapper.map(this, Item.class);
     }
-    
+
     public static ItemFormDto of(Item item){
         return modelMapper.map(item, ItemFormDto.class);
     }
